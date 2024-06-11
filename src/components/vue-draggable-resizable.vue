@@ -1260,6 +1260,11 @@ export default {
         this.zIndex = val
       }
     },
+    angle (val) {
+      if (val >= 0) {
+        this.rotate = val
+      }
+    },
     x (val) {
       if (this.resizing || this.dragging) {
         return

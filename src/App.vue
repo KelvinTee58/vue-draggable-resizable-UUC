@@ -49,7 +49,7 @@
         :isRotateHandlerShow="true"
         @rotating="getRotate"
         @rotated="getRotate2"
-        :angle='20'
+        :angle='angle'
         :snapTolerance="1"
         @refLineParams="getRefLineParams"
         class="test3">
@@ -69,6 +69,7 @@
       />
       <!--辅助线END-->
     </div>
+    <input v-model="angle">
   </div>
 </template>
 

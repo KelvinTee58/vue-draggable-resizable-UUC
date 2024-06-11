@@ -252,6 +252,14 @@ export default {
           switch: true
         }
       }
+    },
+    angle: {
+      type: Number,
+      default: 0,
+      validator: (val) => val >= 0
+    },
+    isAngleRoutShow: {
+      type: Boolean, default: false
     }
   },
 

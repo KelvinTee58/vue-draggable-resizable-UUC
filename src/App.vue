@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div style="height: 800px; width: 1200px; border: 1px solid red; position: relative;margin: 0 auto">
+    <div style="height: 500px; width: 800px; border: 1px solid red; position: relative;margin: 0 auto;">
       <vue-draggable-resizable
         :w="200"
         :h="200"

@@ -314,11 +314,6 @@ export default {
   },
 
   created: function () {
-    // eslint-disable-next-line 无效的prop：minWidth不能大于maxWidth
-    if (this.maxWidth && this.minWidth > this.maxWidth) console.warn('[Vdr warn]: Invalid prop: minWidth cannot be greater than maxWidth')
-    // eslint-disable-next-line 无效prop：minHeight不能大于maxHeight'
-    if (this.maxWidth && this.minHeight > this.maxHeight) console.warn('[Vdr warn]: Invalid prop: minHeight cannot be greater than maxHeight')
-
     this.resetBoundsAndMouseState()
   },
   mounted: function () {
@@ -358,6 +353,7 @@ export default {
   },
 
   methods: {
+
     getCenterPoint () {
       // const { w, h, x: ex, y: ey } = item;
       const { left, top, width, height } = this
@@ -399,7 +395,8 @@ export default {
        */
       document.onmousemove = (e) => {
         const { clientX, clientY } = e
-        const angle = this.getRotate({ x: clientX, y: clientY })
+        const { x: dropX, y: dropY } = this.getParentOffset({ x: clientX, y: clientY })
+        const angle = this.getRotate({ x: dropX, y: dropY })
         this.rotate = angle.toFixed(3)
         this.$emit('rotating', this.rotate)
       }
@@ -421,7 +418,8 @@ export default {
     },
     onRotateTouchmove (e) {
       const { clientX, clientY } = e.changedTouches[0]
-      const angle = this.getRotate({ x: clientX, y: clientY })
+      const { x: dropX, y: dropY } = this.getParentOffset({ x: clientX, y: clientY })
+      const angle = this.getRotate({ x: dropX, y: dropY })
       this.rotate = angle.toFixed(3)
       this.$emit('rotating', this.rotate)
     },
@@ -474,6 +472,19 @@ export default {
       }
 
       return [null, null]
+    },
+    // 获取父元素位置
+    getParentOffset (axis) {
+      let { x, y } = axis
+      let { dx, dy, rx, ry } = [0, 0, 0, 0]
+      if (this.parent === true) {
+        let dropRect = this.$el.parentNode.getBoundingClientRect()
+        dx = dropRect.x
+        dy = dropRect.y
+      }
+      rx = parseInt(x - dx)
+      ry = parseInt(y - dy)
+      return { x: rx, y: ry }
     },
     // 元素触摸按下
     elementTouchDown (e) {

@@ -172,7 +172,7 @@
 
 <script>
 import VueDraggableResizable from 'vue-draggable-resizable'
-import 'vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css'
+import 'vue-draggable-resizable-uuc/dist/VueDraggableResizable.css'
 
 export default {
   name: 'app',
@@ -219,10 +219,10 @@ $ npm install --save vue-draggable-resizable-uuc
 ```javascript
 //main.js
 import Vue from 'vue'
-import vdr from 'vue-draggable-resizable-gorkys'
+import vdr from 'vue-draggable-resizable-uuc'
 
 // 导入默认样式
-import 'vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css'
+import 'vue-draggable-resizable-uuc/dist/VueDraggableResizable.css'
 Vue.component('vdr', vdr)
 ```
 
@@ -251,8 +251,8 @@ Vue.component('vdr', vdr)
 </template>
 
 <script>
-import vdr from 'vue-draggable-resizable-gorkys'
-import 'vue-draggable-resizable-gorkys/dist/VueDraggableResizable.css'
+import vdr from 'vue-draggable-resizable-uuc'
+import 'vue-draggable-resizable-uuc/dist/VueDraggableResizable.css'
 export default {
   components: {vdr},
   data: function () {

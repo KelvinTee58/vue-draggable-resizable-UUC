@@ -1,6 +1,6 @@
 {
   "name": "vue-draggable-resizable-uuc",
-  "version": "2.4.15",
+  "version": "2.4.20",
   "author": "Maurizio Bonani <maurizio.bonani@gmail.com>",
   "main": "dist/VueDraggableResizable.umd.min.js",
   "unpkg": "dist/VueDraggableResizable.umd.min.js",
@@ -60,6 +60,7 @@
   "files": [
     "/dist/*",
     "/src/*",
+    "/src/components/*",
     "*.json",
     "*.js"
   ],

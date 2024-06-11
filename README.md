@@ -18,11 +18,9 @@
 - 吸附对齐
 - 默认样式优化
 
-> Q交流群：138146781
-
 ## 说明
 
-> 说明：组件基于[vue-draggable-resizable](https://github.com/mauricius/vue-draggable-resizable)进行二次开发
+> 说明：组件基于[vue-draggable-resizable](https://github.com/mauricius/vue-draggable-resizable)进行二次开发，同时基于gorkys版本的[vue-draggable-resizable-gorkys](https://github.com/gorkys/vue-draggable-resizable-gorkys)再次开发
 
 距离上[1.7版本](https://github.com/gorkys/vue-draggable-resizable)版本的修改已经过去快一年的时间了，原版组件在之前已经更新到了2.0版本。
 
@@ -99,7 +97,7 @@
 **refLineParams**<br/>
 参数: params<br/>
 
-*** for uuc rotate
+# for uuc rotate
 
 **angle**<br/>
 类型: `number`<br/>

@@ -82,16 +82,17 @@ export default {
   },
   data () {
     return {
+      angle: 0,
       vLine: [],
       hLine: []
     }
   },
   methods: {
     getRotate (angle) {
-      console.log('angle :>> ', angle)
+      this.angle = angle
     },
     getRotate2 (angle) {
-      console.log('angle 2:>> ', angle)
+      this.angle = angle
     },
     // 辅助线回调事件
     getRefLineParams (params) {

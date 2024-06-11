@@ -387,7 +387,7 @@ export default {
     },
     onRotateMouseDBdown () {
       this.rotate = Math.round(this.rotate / 5) * 5
-      this.$emit('rotate', this.rotate)
+      this.$emit('rotating', this.rotate)
     },
     onRotateMousedown () {
       /**
@@ -397,7 +397,7 @@ export default {
         const { clientX, clientY } = e
         const { x: dropX, y: dropY } = this.getParentOffset({ x: clientX, y: clientY })
         const angle = this.getRotate({ x: dropX, y: dropY })
-        this.rotate = angle.toFixed(3)
+        this.rotate = parseFloat(angle.toFixed(3))
         this.$emit('rotating', this.rotate)
       }
 
@@ -420,7 +420,7 @@ export default {
       const { clientX, clientY } = e.changedTouches[0]
       const { x: dropX, y: dropY } = this.getParentOffset({ x: clientX, y: clientY })
       const angle = this.getRotate({ x: dropX, y: dropY })
-      this.rotate = angle.toFixed(3)
+      this.rotate = parseFloat(angle.toFixed(3))
       this.$emit('rotating', this.rotate)
     },
     // 右键菜单

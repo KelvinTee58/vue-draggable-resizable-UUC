@@ -94,16 +94,71 @@
 ```vue
 <vue-draggable-resizable :snap="true" :snap-tolerance="20" />
 ```
+
 ## 新增Events
 **refLineParams**<br/>
 参数: params<br/>
+
+*** for uuc rotate
+
+**angle**<br/>
+类型: `number`<br/>
+必需: `false`<br/>
+默认: `0`
+
+元素旋转角度
+
+```vue
+<vue-draggable-resizable :angle="20" />
+```
+
+**classNameRotateHandle**<br/>
+类型: `string`<br/>
+必需: `false`<br/>
+默认: ``
+
+元素旋转角度时候handle class
+
+```vue
+<vue-draggable-resizable classNameRotateHandle="classNameRotateHandle" />
+```
+
+**isRotateHandlerShow**<br/>
+类型: `boolean`<br/>
+必需: `false`<br/>
+默认: ``
+
+
+是否显示旋转handle逻辑
+
+```vue
+<vue-draggable-resizable :isRotateHandlerShow="true" />
+```
+## 新增Events
+**rotating**<br/>
+参数: params<br/>
+
+**rotated**<br/>
+参数: params<br/>
+
 
 返回参数是一个Object,里面包含`vLine`与`hLine`，具体使用参考下面代码。
 
 ```vue
 <div>
-  <vue-draggable-resizable :snap="true" :snap-tolerance="20" @refLineParams="getRefLineParams" />
-  <vue-draggable-resizable :snap="true" :snap-tolerance="20" @refLineParams="getRefLineParams" />
+  <vue-draggable-resizable :snap="true" :snap-tolerance="20" @refLineParams="getRefLineParams" :isRotateHandlerShow="true"
+        @rotating="getRotate"/>
+  <vue-draggable-resizable :snap="true" :snap-tolerance="20" @refLineParams="getRefLineParams" :isRotateHandlerShow="true"
+        @rotating="getRotate"
+        :angle='20'/>
+  <vue-draggable-resizable :snap="true" :snap-tolerance="20" @refLineParams="getRefLineParams" :isRotateHandlerShow="true"
+        @rotating="getRotate"
+        @rotated="getRotate"
+        :angle='20'>
+        <div slot="rotateHandle">
+        Aa
+        </div>
+  </vue-draggable-resizable>
   <span class="ref-line v-line"
       v-for="item in vLine"
       v-show="item.display"
@@ -132,6 +187,9 @@ export default {
     }
   },
   methods: {
+    getRotate (angle) {
+      console.log('angle :>> ', angle)
+    },
     getRefLineParams (params) {
       const { vLine, hLine } = params
       this.vLine = vLine

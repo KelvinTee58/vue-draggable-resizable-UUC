@@ -22,18 +22,19 @@
     >
       <slot :name="handle"></slot>
     </div>
-    123
-    <div class="vdrRotate">
+    <div :class="['vdrRotate',classNameRotateHandle]">
       <div
         class="rotatehandle"
-        v-show="enabled && isAngleRoutShow"
+        v-show="enabled && isRotateHandlerShow"
         @touchend.prevent.stop
         @mousedown.prevent.stop="onRotateMousedown"
         @touchstart.prevent.stop
         @touchmove.prevent.stop="onRotateTouchmove"
         @dblclick.prevent.stop="onRotateMouseDBdown"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+        <slot name="rotateHandle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+        </slot>
       </div>
     </div>
     <slot></slot>
@@ -105,6 +106,10 @@ export default {
     classNameHandle: {
       type: String,
       default: 'handle'
+    },
+    classNameRotateHandle: {
+      type: String,
+      default: ''
     },
     disableUserSelect: {
       type: Boolean,
@@ -272,7 +277,7 @@ export default {
       default: 0,
       validator: (val) => val >= 0
     },
-    isAngleRoutShow: {
+    isRotateHandlerShow: {
       type: Boolean, default: false
     }
   },
@@ -396,13 +401,14 @@ export default {
         const { clientX, clientY } = e
         const angle = this.getRotate({ x: clientX, y: clientY })
         this.rotate = angle.toFixed(3)
-        this.$emit('rotate', this.rotate)
+        this.$emit('rotating', this.rotate)
       }
 
       /**
        * 表达式声明抬起事件
        */
       document.onmouseup = () => {
+        this.$emit('rotated', this.rotate)
         /**
          * 清理上次的移动事件
          */
@@ -417,7 +423,7 @@ export default {
       const { clientX, clientY } = e.changedTouches[0]
       const angle = this.getRotate({ x: clientX, y: clientY })
       this.rotate = angle.toFixed(3)
-      this.$emit('rotate', this.rotate)
+      this.$emit('rotating', this.rotate)
     },
     // 右键菜单
     onContextMenu (e) {

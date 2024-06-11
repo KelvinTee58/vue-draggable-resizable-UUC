@@ -12,7 +12,7 @@
         :snap="true"
         :snapTolerance="1"
         @refLineParams="getRefLineParams"
-        :isAngleRoutShow="true"
+        :isRotateHandlerShow="true"
         @rotate="getRotate"
         class="test1">
       </vue-draggable-resizable>
@@ -27,8 +27,14 @@
         :isConflictCheck="true"
         :snap="true"
         :snapTolerance="1"
+        :isRotateHandlerShow="true"
+        @rotating="getRotate"
+        :angle='20'
         @refLineParams="getRefLineParams"
         class="test2">
+        <div slot="rotateHandle">
+        Aa
+        </div>
       </vue-draggable-resizable>
       <vue-draggable-resizable
         :w="200"
@@ -40,6 +46,10 @@
         :min-height="200"
         :isConflictCheck="true"
         :snap="true"
+        :isRotateHandlerShow="true"
+        @rotating="getRotate"
+        @rotated="getRotate2"
+        :angle='20'
         :snapTolerance="1"
         @refLineParams="getRefLineParams"
         class="test3">
@@ -79,6 +89,9 @@ export default {
   methods: {
     getRotate (angle) {
       console.log('angle :>> ', angle)
+    },
+    getRotate2 (angle) {
+      console.log('angle 2:>> ', angle)
     },
     // 辅助线回调事件
     getRefLineParams (params) {

@@ -12,6 +12,8 @@
         :snap="true"
         :snapTolerance="1"
         @refLineParams="getRefLineParams"
+        :isAngleRoutShow="true"
+        @rotate="getRotate"
         class="test1">
       </vue-draggable-resizable>
       <vue-draggable-resizable
@@ -75,6 +77,9 @@ export default {
     }
   },
   methods: {
+    getRotate (angle) {
+      console.log('angle :>> ', angle)
+    },
     // 辅助线回调事件
     getRefLineParams (params) {
       const { vLine, hLine } = params

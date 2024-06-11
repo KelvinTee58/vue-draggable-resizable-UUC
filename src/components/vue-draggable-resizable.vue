@@ -22,6 +22,20 @@
     >
       <slot :name="handle"></slot>
     </div>
+    123
+    <div class="vdrRotate">
+      <div
+        class="rotatehandle"
+        v-show="enabled && isAngleRoutShow"
+        @touchend.prevent.stop
+        @mousedown.prevent.stop="onRotateMousedown"
+        @touchstart.prevent.stop
+        @touchmove.prevent.stop="onRotateTouchmove"
+        @dblclick.prevent.stop="onRotateMouseDBdown"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+      </div>
+    </div>
     <slot></slot>
   </div>
 </template>
@@ -269,6 +283,7 @@ export default {
       top: this.y,
       right: null,
       bottom: null,
+      rotate: this.angle,
 
       width: null,
       height: null,
@@ -338,6 +353,72 @@ export default {
   },
 
   methods: {
+    getCenterPoint () {
+      // const { w, h, x: ex, y: ey } = item;
+      const { left, top, width, height } = this
+      const x = width / 2 + left
+      const y = height / 2 + top
+      return { x, y }
+    },
+    getRotate (point) {
+      const center = this.getCenterPoint()
+      if (point.x === center.x) {
+        return point.y >= center.y ? 0 : 180
+      }
+      if (point.y === center.y) {
+        return point.x < center.x ? 90 : 270
+      }
+      const x = point.x - center.x
+      const y = point.y - center.y
+      let angle = (Math.atan(Math.abs(x / y)) / Math.PI) * 180
+      // 默认从第三象限(x<0 && y>0)开始为正
+      if (x < 0 && y < 0) {
+        // 第二象限
+        angle = 180 - angle
+      } else if (x > 0 && y < 0) {
+        // 第一象限
+        angle += 180
+      } else if (x > 0 && y > 0) {
+        // 第四象限
+        angle = 360 - angle
+      }
+      return angle
+    },
+    onRotateMouseDBdown () {
+      this.rotate = Math.round(this.rotate / 5) * 5
+      this.$emit('rotate', this.rotate)
+    },
+    onRotateMousedown () {
+      /**
+       * 表达式声明移动事件
+       */
+      document.onmousemove = (e) => {
+        const { clientX, clientY } = e
+        const angle = this.getRotate({ x: clientX, y: clientY })
+        this.rotate = angle.toFixed(3)
+        this.$emit('rotate', this.rotate)
+      }
+
+      /**
+       * 表达式声明抬起事件
+       */
+      document.onmouseup = () => {
+        /**
+         * 清理上次的移动事件
+         */
+        document.onmousemove = null
+        /**
+         * 清理上次的抬起事件
+         */
+        document.onmouseup = null
+      }
+    },
+    onRotateTouchmove (e) {
+      const { clientX, clientY } = e.changedTouches[0]
+      const angle = this.getRotate({ x: clientX, y: clientY })
+      this.rotate = angle.toFixed(3)
+      this.$emit('rotate', this.rotate)
+    },
     // 右键菜单
     onContextMenu (e) {
       this.$emit('contextmenu', e)
@@ -1106,7 +1187,7 @@ export default {
     },
     style () {
       return {
-        transform: `translate(${this.left}px, ${this.top}px)`,
+        transform: `translate(${this.left}px, ${this.top}px) rotate(${this.rotate}deg)`,
         width: this.computedWidth,
         height: this.computedHeight,
         zIndex: this.zIndex,

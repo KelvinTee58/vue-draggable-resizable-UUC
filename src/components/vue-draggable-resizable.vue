@@ -388,6 +388,7 @@ export default {
     onRotateMouseDBdown () {
       this.rotate = Math.round(this.rotate / 5) * 5
       this.$emit('rotating', this.rotate)
+      this.$emit('rotated', this.rotate)
     },
     onRotateMousedown () {
       /**
